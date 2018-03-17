@@ -53,9 +53,8 @@ h3 {
 .btn {
 	padding: 20px;
 	margin: 0;
-	border-color: #9FB80A;
-	border-width: 2px;
-	color: #9FB80A;;
+	color: #9FB80A;
+	display:inline;
 }
 .btn:hover {
 	border-color: #9FB80A;
@@ -178,3 +177,13 @@ u }
 
 }
 
+.btn {
+	color: #007bff;
+	-webkit-appearance: button;
+	text-decoration: none;
+	-webkit-text-decoration-skip: objects;
+}
+
+#wat.btn {
+	-webkit-appearance: button;
+};
