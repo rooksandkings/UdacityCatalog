@@ -15,14 +15,6 @@
 				<div class="form-group">
 					<label for="name">Name:</label>
 					<input type ="text" class="form-control" name="name" value="{{restaurant.name }}">
-					<!--
-					<button type="submit" class="btn btn-default" id="submit" type="submit">
-					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
-					<a href = '{{url_for('showRestaurants')}}'>
-						<button class="btn btn-default delete">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
-					</a>
-				-->
 				</div>
 				<a href="javascript:;" onclick="parentNode.submit();" button type ="submit" class="btn btn-outline-primary">Save</a>
 				<a href = '{{url_for('showRestaurants')}}' class="btn btn-outline-primary">Cancel</a>
