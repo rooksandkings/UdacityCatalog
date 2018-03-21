@@ -6,18 +6,18 @@
 	</div>
 	<div class="row banner menu">
 		<div class="col-md-11 col-md-offset-1 padding-none">
-			<h1>Edit {{restaurant.name}}</h1>
+			<h1>Edit {{manifest.name}}</h1>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-1 padding-top">
-			<form action="{{ url_for('editRestaurant',restaurant_id = restaurant.id)}}" method = "post">
+			<form action="{{ url_for('editManifest', manifest_id = manifest.id)}}" method = "post">
 				<div class="form-group">
 					<label for="name">Name:</label>
-					<input type ="text" class="form-control" name="name" value="{{restaurant.name }}">
+					<input type ="text" class="form-control" name="name" value="{{manifest.name }}">
 				</div>
 				<a href="javascript:;" onclick="parentNode.submit();" button type ="submit" class="btn btn-outline-primary">Save</a>
-				<a href = '{{url_for('showRestaurants')}}' class="btn btn-outline-primary">Cancel</a>
+				<a href = '{{url_for('showManifest')}}' class="btn btn-outline-primary">Cancel</a>
 			</form>
 		</div>
 	</div>

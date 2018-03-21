@@ -2,7 +2,6 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
-
 Base = declarative_base()
 
 
@@ -13,7 +12,6 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
-
 
 # class Restaurant(Base):
 #     __tablename__ = 'restaurant'
@@ -44,8 +42,8 @@ class User(Base):
 #     user_id = Column(Integer, ForeignKey('user.id'))
 #     user = relationship(User)
 
-class SpaceX(Base):
-    __tablename__ = 'launch'
+class SpaceXLaunchManifest(Base):
+    __tablename__ = 'launch_manifest'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
@@ -60,16 +58,16 @@ class SpaceX(Base):
             'id': self.id,
         }
 
-class Rockets(Base):
-    __tablename__ = 'rocket'
+class Launches(Base):
+    __tablename__ = 'launches'
 
-    name = Column(String(80), nullable=False)
+    customer = Column(String(80), nullable=False)
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
     launch_date = Column(String(8))
     rocket_type = Column(String(250))
-    rocket_id = Column(Integer, ForeignKey('launch.id'))
-    launch = relationship(SpaceX)
+    launch_id = Column(Integer, ForeignKey('launch_manifest.id'))
+    launch = relationship(SpaceXLaunchManifest)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
@@ -77,7 +75,7 @@ class Rockets(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'name': self.name,
+            'customer': self.customer,
             'description': self.description,
             'id': self.id,
             'launch_date': self.launch_date,

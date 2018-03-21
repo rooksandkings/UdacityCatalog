@@ -6,7 +6,7 @@
 	</div>
 	<div class="row banner menu">
 		<div class="col-md-11 col-md-offset-2 padding-none">
-			<h1>{{ restaurant.name }}
+			<h1>{{ manifest.name }}
 			<figure class="creator">
                 <img src="{{ creator.picture}}">
                 <figcaption>{{ creator.name }}</figcaption>
@@ -20,9 +20,9 @@
 	{% if 'username' in session and session.username == creator.name %}
 		<div class="col-md-1"></div>
 		<div class="col-md-11 padding-none">
-			<a href="{{url_for('editRestaurant', restaurant_id = restaurant.id )}}" button class="btn btn-outline-primary" id="edit-restaurant" aria-hidden="true">Edit Restaurant Name</a>
-			<a href="{{url_for('newMenuItem', restaurant_id = restaurant.id )}}" button class="btn btn-outline-primary" id="new-menu-item" aria-hidden="true">Edit Menu</a>
-			<a href="{{url_for('deleteRestaurant', restaurant_id = restaurant.id )}}" button class="btn btn-outline-primary" id="delete-restaurant" aria-hidden="true">Delete Restaurant</a>
+			<a href="{{url_for('editManifest', manifest_id = manifest.id )}}" button class="btn btn-outline-primary" id="edit-manifest_id" aria-hidden="true">Edit Launch Name</a>
+			<a href="{{url_for('newLaunch', manifest_id = manifest.id )}}" button class="btn btn-outline-primary" id="new-launch" aria-hidden="true">New Launch</a>
+			<a href="{{url_for('deleteManifest', manifest_id = manifest.id )}}" button class="btn btn-outline-primary" id="delete-manifest" aria-hidden="true">Delete Launch</a>
 		</div>
 		<div class="col-md-7"></div>
 		{% endif %}

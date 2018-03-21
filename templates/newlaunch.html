@@ -6,7 +6,7 @@
 	</div>
 	<div class="row banner menu">
 		<div class="col-md-11 col-md-offset-1 padding-none">
-			<h1>New Restaurant</h1>
+			<h1>New Launch</h1>
 		</div>
 	</div>
 	<div class="row">
@@ -16,9 +16,9 @@
 				<label for="name">Name:</label>
 				<input type ="text" class="form-control" maxlength="100" name="name">
 				<div class="padding-bottom"></div>
-				<button type="submit" class="btn btn-default" id="submit" type="submit">
-				<span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>Create</button>
 				</div>
+				<a href="javascript:;" onclick="parentNode.submit();" button type ="submit" class="submit-link btn btn-outline-primary">Save</a>
+				<a href = '{{url_for('showManifest')}}' class="btn btn-outline-primary">Cancel</a>
 			</form>
 		</div>
 	</div>
