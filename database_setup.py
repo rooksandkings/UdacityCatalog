@@ -13,6 +13,7 @@ class User(Base):
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
 
+
 class SpaceXLaunchManifest(Base):
     __tablename__ = 'launch_manifest'
 
@@ -28,6 +29,7 @@ class SpaceXLaunchManifest(Base):
             'name': self.name,
             'id': self.id,
         }
+
 
 class Launches(Base):
     __tablename__ = 'launches'

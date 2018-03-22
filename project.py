@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
+from flask import Flask, render_template, request, redirect
+from flask import jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, SpaceXLaunchManifest, Launches, User
@@ -45,8 +46,6 @@ def fbconnect():
         return response
     access_token = request.data
     print "access token received %s " % access_token
-
-
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
         'web']['app_id']
     app_secret = json.loads(
@@ -55,7 +54,6 @@ def fbconnect():
         app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-
 
     # Use token to get user info from API
     userinfo_url = "https://graph.facebook.com/v2.8/me"
@@ -114,7 +112,7 @@ def fbdisconnect():
     facebook_id = login_session['facebook_id']
     # The access token must me included to successfully logout
     access_token = login_session['access_token']
-    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id,access_token)
+    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
     return "you have been logged out"
@@ -127,6 +125,7 @@ def gconnect():
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
+
     # Obtain authorization code
     code = request.data
 
@@ -211,6 +210,7 @@ def gconnect():
     print "done!"
     return output
 
+
 # User Helper Functions
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
@@ -232,6 +232,7 @@ def getUserID(email):
         return user.id
     except:
         return None
+
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @app.route('/gdisconnect')
@@ -300,6 +301,7 @@ def newMission():
     else:
         return render_template('newmission.html')
 
+
 # Edit a launch on the manifest
 @app.route('/launch_manifest/<int:manifest_id>/edit/', methods=['GET', 'POST'])
 def editMission(manifest_id):
@@ -337,6 +339,7 @@ def deleteMission(manifest_id):
     else:
         return render_template('deleteMission.html', mission=missionToDelete, creator=creator)
 
+
 # Show a launch's details
 @app.route('/launch_manifest/<int:manifest_id>/')
 @app.route('/launch_manifest/<int:manifest_id>/launch/')
@@ -360,18 +363,19 @@ def newLaunch(manifest_id):
     if login_session['user_id'] != manifest.user_id:
         return "<script>function myFunction() {alert('You are not authorized to add launches to this mission. Please create your own mission to add launches.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
-            newLaunch = Launches(customer=request.form['customer'], 
-                                description=request.form['description'], 
-                                launch_date=request.form['launch_date'],
-                                rocket_type=request.form['rocket_type'],  
-                                launch_id=manifest_id, 
-                                user_id=manifest.user_id)
+            newLaunch = Launches(customer=request.form['customer'],
+                                 description=request.form['description'],
+                                 launch_date=request.form['launch_date'],
+                                 rocket_type=request.form['rocket_type'],
+                                 launch_id=manifest_id,
+                                 user_id=manifest.user_id)
             session.add(newLaunch)
             session.commit()
             flash('New Launch %s Successfully Created' % (newLaunch.customer))
             return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
         return render_template('newlaunch.html', manifest_id=manifest_id)
+
 
 # Edit a launch
 @app.route('/launch_manifest/<int:manifest_id>/launch/<int:launch_id>/edit', methods=['GET', 'POST'])

@@ -1,52 +1,47 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-
 <div class="row banner">
-	<div class="col-md-1"></div>
-		<h1>New Launch</h1>
+   <div class="col-md-1"></div>
+   <h1>New Launch</h1>
 </div>
-
-	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="col-md-6 col-md-offset-1 padding-top">
-			<form action="#" method = "post">
-				<div class="form-group">
-					<label for="name">Name:</label>
-					<input type ="text" maxlength="50" class="form-control" name="customer"placeholder="Customer">
-
-					<label for="description">Description:</label>
-					<textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="Description of the course"></textarea>
-
-					<label for="launch_date">Launch Date:</label>
-					<div class="input-group">
-						<input type ="date" class="form-control" maxlength="10" name="launch_date" placeholder="Launch Date MMM/DD/YYYY">
-					</div>
-					<label for="rocket_type">Rocket:</label>
-					<div class="radio">
-					  <label>
-					    <input type="radio" name="rocket_type" id="rocket1" value="Falcon 1">Falcon 1
-					  </label>
-					</div>
-					<div class="radio">
-					  <label>
-					    <input type="radio" name="rocket_type" id="rocket2" value="Falcon 9 v1.1">Falcon 9 v1.1
-					  </label>
-					</div>
-					<div class="radio">
-					  <label>
-					    <input type="radio" name="rocket_type" id="rocket3" value="Falcon 9 v1.2">Falcon 9 v1.2
-					  </label>
-					</div>
-					<div class="radio">
-					  <label>
-					    <input type="radio" name="rocket_type" id="rocket4" value="Falcon Heavy">Falcon Heavy
-					  </label>
-					</div>
-				</div>
-				<a href="javascript:;" onclick="parentNode.submit();" button type ="submit" id="submit" class="btn btn-outline-primary">Create</a>
-			</form>
-		</div>
-	</div>
+<div class="row">
+   <div class="col-md-1"></div>
+   <div class="col-md-6 col-md-offset-1 padding-top">
+      <form action="#" method = "post">
+         <div class="form-group">
+            <label for="name">Name:</label>
+            <input type ="text" maxlength="50" class="form-control" name="customer"placeholder="Customer">
+            <label for="description">Description:</label>
+            <textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="Description of the course"></textarea>
+            <label for="launch_date">Launch Date:</label>
+            <div class="input-group">
+               <input type ="date" class="form-control" maxlength="10" name="launch_date" placeholder="Launch Date MMM/DD/YYYY">
+            </div>
+            <label for="rocket_type">Rocket:</label>
+            <div class="radio">
+               <label>
+               <input type="radio" name="rocket_type" id="rocket1" value="Falcon 1">Falcon 1
+               </label>
+            </div>
+            <div class="radio">
+               <label>
+               <input type="radio" name="rocket_type" id="rocket2" value="Falcon 9 v1.1">Falcon 9 v1.1
+               </label>
+            </div>
+            <div class="radio">
+               <label>
+               <input type="radio" name="rocket_type" id="rocket3" value="Falcon 9 v1.2">Falcon 9 v1.2
+               </label>
+            </div>
+            <div class="radio">
+               <label>
+               <input type="radio" name="rocket_type" id="rocket4" value="Falcon Heavy">Falcon Heavy
+               </label>
+            </div>
+         </div>
+         <a href="javascript:;" onclick="parentNode.submit();" button type ="submit" id="submit" class="btn btn-outline-primary">Create</a>
+      </form>
+   </div>
+</div>
 {% endblock %}
-

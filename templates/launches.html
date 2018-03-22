@@ -1,52 +1,49 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-
 <div class="row banner">
-	<div class="col-md-1"></div>
-		<div class="col-md-9">
-		<h1>Mission: {{ manifest.name }}
-		<figure class="creator">
-			<img src="{{ creator.picture}}">
-			<figcaption>{{ creator.name }}</figcaption>
-		</figure>
-		</h1>
-		</div>
+   <div class="col-md-1"></div>
+   <div class="col-md-9">
+      <h1>
+         Mission: {{ manifest.name }}
+         <figure class="creator">
+            <img src="{{ creator.picture}}">
+            <figcaption>{{ creator.name }}</figcaption>
+         </figure>
+      </h1>
+   </div>
 </div>
-
 {% if launch !=[] %}
-	{% for i in launch %}
-		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-3">
-				<h3>Customer:</h3>
-				<h2>{{i.customer}}</h2>
-				<h5>{{i.description}}</h5>
-			</div>
-			<div class="col-md-3">
-				<h3>Launch Date:</h3>
-				<h2>{{i.launch_date}}</h2>
-			</div>
-			<div class="col-md-3">
-				<h3>Rocket Type:</h3>
-				<h2>{{i.rocket_type}}</h2>
-			</div>
-			<div class="col-md-2">
-				<a href='{{url_for('editLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="edit-launch" aria-hidden="true">Edit Launch</a> |
-				<a href='{{url_for('deleteLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="delete-launch" aria-hidden="true">Delete Launch</a>
-			</div>
-		</div>
-		<div class="col-md-1"></div>
-	{% endfor %}
+{% for i in launch %}
+<div class="row">
+   <div class="col-md-1"></div>
+   <div class="col-md-3">
+      <h3>Customer:</h3>
+      <h2>{{i.customer}}</h2>
+      <h5>{{i.description}}</h5>
+   </div>
+   <div class="col-md-3">
+      <h3>Launch Date:</h3>
+      <h2>{{i.launch_date}}</h2>
+   </div>
+   <div class="col-md-3">
+      <h3>Rocket Type:</h3>
+      <h2>{{i.rocket_type}}</h2>
+   </div>
+   <div class="col-md-2">
+      <a href='{{url_for('editLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="edit-launch" aria-hidden="true">Edit Launch</a> |
+      <a href='{{url_for('deleteLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="delete-launch" aria-hidden="true">Delete Launch</a>
+   </div>
+</div>
+<div class="col-md-1"></div>
+{% endfor %}
 {% endif %}
-	<div class="row">
-		<div class="col-md-1"></div>
-		<a href='{{url_for('editMission', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="edit-manifest_id" aria-hidden="true">Edit Misson Name</a>
-		&nbsp
-		<a href='{{url_for('deleteMission', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="delete-mission" aria-hidden="true">Delete Mission</a>
-		&nbsp
-		<a href='{{url_for('newLaunch', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="new-launch" aria-hidden="true">New Launch</a>
-	</div>
-
-
+<div class="row">
+   <div class="col-md-1"></div>
+   <a href='{{url_for('editMission', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="edit-manifest_id" aria-hidden="true">Edit Misson Name</a>
+   &nbsp
+   <a href='{{url_for('deleteMission', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="delete-mission" aria-hidden="true">Delete Mission</a>
+   &nbsp
+   <a href='{{url_for('newLaunch', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="new-launch" aria-hidden="true">New Launch</a>
+</div>
 {% endblock %}
