@@ -1,16 +1,17 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-<div class="row padding-top padding-bottom">
+<div class="row banner">
    <div class="col-md-1"></div>
-   <div class="col-md-10 padding-none"></div>
-   <div class="col-md-1"></div>
+   <div class="col-md-9">
+      <h1>Launch Manifest</h1>
+   </div>
 </div>
 {% for launch in manifest %}
 <a href = "{{url_for('showLaunch', manifest_id = launch.id)}}">
    <div class="row">
       <div class="col-md-1"></div>
-      <div class="col-md-10 restaurant-list">
+      <div class="col-md-10 manifest-list">
          <h3>{{launch.name}}</h3>
       </div>
       <div class="col-md-1"></div>
