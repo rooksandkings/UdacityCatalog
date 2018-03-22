@@ -21,6 +21,7 @@
         if (authResult['code']) {
           // Hide the sign-in button now that the user is authorized
           $('#GoogleSigninButton').attr('style', 'display: none');
+          $('#FBSigninButton').attr('style', 'display: none');
           // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
           $.ajax({
             type: 'POST',
@@ -89,7 +90,10 @@
           success: function(result) {
             // Handle or verify the server response if necessary.
             if (result) {
-              $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+              // Hide the sign-in button now that the user is authorized
+              $('#GoogleSigninButton').attr('style', 'display: none');
+              $('#FBSigninButton').attr('style', 'display: none');
+              $('#result').html('<h3>Login Successful!</h3></br>'+ result + '</br>Redirecting...')
              setTimeout(function() {
               window.location.href = "/launch_manifest";
              }, 4000);
