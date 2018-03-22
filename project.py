@@ -348,7 +348,7 @@ def deleteMission(manifest_id):
         session.commit()
         return redirect(url_for('showManifest', manifest_id=manifest_id))
     else:
-        return render_template('deleteMission.html', manifest=missionToDelete, creator=creator)
+        return render_template('deleteMission.html', mission=missionToDelete, creator=creator)
 
 # Show a launch's details
 
@@ -424,6 +424,8 @@ def editLaunch(manifest_id, launch_id):
 def deleteLaunch(manifest_id, launch_id):
     if 'username' not in login_session:
         return redirect('/login')
+    mission = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
+    creator = getUserInfo(mission.user_id)
     launchToDelete = session.query(Launches).filter_by(id=launch_id).one()
     mission = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
     if login_session['user_id'] != mission.user_id:
@@ -434,7 +436,7 @@ def deleteLaunch(manifest_id, launch_id):
         flash('Launch Successfully Deleted')
         return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
-        return render_template('deletelaunch.html', launch=launchToDelete, manifest_id=manifest_id)
+        return render_template('deletelaunch.html', launch=launchToDelete, creator=creator, mission=mission, manifest_id=manifest_id)
 
 
 # Disconnect based on provider
