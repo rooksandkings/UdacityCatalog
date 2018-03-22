@@ -1,99 +1,52 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-	<div class="row divider green">
-		<div class="col-md-12"></div>
-	</div>
-	<div class="row banner menu">
-		<div class="col-md-11 col-md-offset-2 padding-none">
-			<h1>{{ manifest.name }}
-			<figure class="creator">
-                <img src="{{ creator.picture}}">
-                <figcaption>{{ creator.name }}</figcaption>
-            </figure>
-			</h1>
 
+<div class="row banner">
+	<div class="col-md-1"></div>
+		<div class="col-md-9">
+		<h1>Mission: {{ manifest.name }}
+		<figure class="creator">
+			<img src="{{ creator.picture}}">
+			<figcaption>{{ creator.name }}</figcaption>
+		</figure>
+		</h1>
 		</div>
-	</div>
-
-<div class="row padding-top padding-bottom">
-	{% if 'username' in session and session.username == creator.name %}
-		<div class="col-md-1"></div>
-		<div class="col-md-11 padding-none">
-			<a href="{{url_for('editManifest', manifest_id = manifest.id )}}" button class="btn btn-outline-primary" id="edit-manifest_id" aria-hidden="true">Edit Launch Name</a>
-			<a href="{{url_for('newLaunch', manifest_id = manifest.id )}}" button class="btn btn-outline-primary" id="new-launch" aria-hidden="true">New Launch</a>
-			<a href="{{url_for('deleteManifest', manifest_id = manifest.id )}}" button class="btn btn-outline-primary" id="delete-manifest" aria-hidden="true">Delete Launch</a>
-		</div>
-		<div class="col-md-7"></div>
-		{% endif %}
 </div>
 
-	{% if items !=[] %}	
+{% if launch !=[] %}
+	{% for i in launch %}
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-3">
-				<h2>Appetizers</h2>
-					{% for i in items %}
-						{% if i.course == 'Appetizer' %}
-							<div class="menu-item">
-								<h3>{{i.name}}</h3>
-								<p>{{i.description}}</p>
-								<p class="menu-price">{{i.price}}</p>
-								{% if 'username' in session and session.username == creator.name %}
-									<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Edit</a> | 
-									<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Delete</a>
-								{% endif %}
-							</div>
-						{% endif %}
-					{% endfor %}
-			</div>
-			<div class="col-md-4">			
-				<h2>Entrees</h2>
-					{% for i in items %}
-						{% if i.course == 'Entree' %}
-						<div class="menu-item">
-							<h3>{{i.name}}</h3>
-							<p>{{i.description}}</p>
-							<p class="menu-price">{{i.price}}</p>
-							{% if 'username' in session and session.username == creator.name %}
-								<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Edit</a> | 
-								<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Delete</a>
-							{% endif %}
-						</div>
-						{% endif %}
-					{% endfor %}
+				<h3>Customer:</h3>
+				<h2>{{i.customer}}</h2>
+				<h5>{{i.description}}</h5>
 			</div>
 			<div class="col-md-3">
-				<h2>Desserts</h2>
-					{% for i in items %}
-						{% if i.course == 'Dessert' %}
-						<div class="menu-item">
-							<h3>{{i.name}}</h3>
-							<p>{{i.description}}</p>
-							<p class="menu-price">{{i.price}}</p>
-							{% if 'username' in session and session.username == creator.name %}
-								<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Edit</a> | 
-								<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Delete</a>
-							{% endif %}
-						</div>
-						{% endif %}
-					{% endfor %}
-				<h2>Beverages</h2>
-					{% for i in items %}
-						{% if i.course == 'Beverage' %}
-						<div class="menu-item">
-							<h3>{{i.name}}</h3>
-							<p>{{i.description}}</p>
-							<p class="menu-price">{{i.price}}</p>
-							{% if 'username' in session and session.username == creator.name %}
-								<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Edit</a> | 
-								<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id=i.id ) }}'>Delete</a>
-							{% endif %}
-						</div>
-						{% endif %}
-					{% endfor %}
+				<h3>Launch Date:</h3>
+				<h2>{{i.launch_date}}</h2>
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-3">
+				<h3>Rocket Type:</h3>
+				<h2>{{i.rocket_type}}</h2>
+			</div>
+			<div class="col-md-2">
+				<a href='{{url_for('newLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="edit-launch" aria-hidden="true">Edit Launch</a> |
+				<a href='{{url_for('newLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="delete-launch" aria-hidden="true">Delete Launch</a>
+			</div>
 		</div>
-	{% endif %}
+		<div class="col-md-1"></div>
+	{% endfor %}
+{% endif %}
+	<div class="row">
+		<div class="col-md-1"></div>
+		<a href='{{url_for('editMission', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="edit-manifest_id" aria-hidden="true">Edit Misson Name</a>
+		&nbsp
+		<a href='{{url_for('deleteMission', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="delete-mission" aria-hidden="true">Delete Mission</a>
+		&nbsp
+		<a href='{{url_for('newLaunch', manifest_id = manifest.id )}}' button class="btn btn-outline-primary" id="new-launch" aria-hidden="true">New Launch</a>
+	</div>
+
+
 {% endblock %}

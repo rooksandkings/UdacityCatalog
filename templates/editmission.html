@@ -1,19 +1,25 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-	<div class="row divider green">
-		<div class="col-md-12"></div>
-	</div>
-	<div class="row banner menu">
-		<div class="col-md-11 col-md-offset-1 padding-none">
-			<h1>Edit {{manifest.name}}</h1>
+
+<div class="row banner">
+	<div class="col-md-1"></div>
+		<div class="col-md-9">
+		<h1>Edit Mission: {{ manifest.name }}
+		<figure class="creator">
+			<img src="{{ creator.picture}}">
+			<figcaption>{{ creator.name }}</figcaption>
+		</figure>
+		</h1>
 		</div>
-	</div>
+</div>
+
 	<div class="row">
+		<div class="col-md-1"></div>
 		<div class="col-md-6 col-md-offset-1 padding-top">
-			<form action="{{ url_for('editManifest', manifest_id = manifest.id)}}" method = "post">
+			<form action="{{ url_for('editMission', manifest_id = manifest.id)}}" method = "post">
 				<div class="form-group">
-					<label for="name">Name:</label>
+					<h2>Mission Name:</h2>
 					<input type ="text" class="form-control" name="name" value="{{manifest.name }}">
 				</div>
 				<a href="javascript:;" onclick="parentNode.submit();" button type ="submit" class="btn btn-outline-primary">Save</a>
