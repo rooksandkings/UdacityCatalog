@@ -51,8 +51,7 @@ def fbconnect():
         'web']['app_id']
     app_secret = json.loads(
         open('fb_client_secrets.json', 'r').read())['web']['app_secret']
-    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
-        app_id, app_secret, access_token)
+    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
 
@@ -102,7 +101,10 @@ def fbconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px;' \
+              'height: 300px;border-radius: 150px;' \
+              '-webkit-border-radius: 150px;' \
+              '-moz-border-radius: 150px;"> '
 
     flash("Now logged in as %s" % login_session['username'])
     return output
@@ -206,7 +208,10 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px;' \
+              'height: 300px;border-radius: 150px;' \
+              '-webkit-border-radius: 150px;' \
+              '-moz-border-radius: 150px;"> '
     flash("You are now logged in as %s" % login_session['username'])
     print "done!"
     return output
@@ -312,14 +317,18 @@ def editMission(manifest_id):
     if 'username' not in login_session:
         return redirect('/login')
     if editedMission.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this Mission. Please create your own Mission in order to edit.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() {" \
+                "alert('You are not authorized to edit this Mission." \
+                "Please create your own Mission in order to edit.');}</script>" \
+                "<body onload='myFunction()'>"
     if request.method == 'POST':
         if request.form['name']:
             editedMission.name = request.form['name']
             flash('Mission Successfully Edited %s' % editedMission.name)
             return redirect(url_for('showManifest'))
     else:
-        return render_template('editMission.html', manifest=editedMission, creator=creator)
+        return render_template('editMission.html', manifest=editedMission, 
+            creator=creator)
 
 
 # Delete a launch on the manifest
@@ -331,14 +340,18 @@ def deleteMission(manifest_id):
     if 'username' not in login_session:
         return redirect('/login')
     if missionToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to delete this Launch. Please create your own Launch in order to delete.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() "\
+                "{alert('You are not authorized to delete this Launch. " \
+                "Please create your own Launch in order to delete.');}" \
+                "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         session.delete(missionToDelete)
         flash('%s Successfully Deleted' % missionToDelete.name)
         session.commit()
         return redirect(url_for('showManifest', manifest_id=manifest_id))
     else:
-        return render_template('deleteMission.html', mission=missionToDelete, creator=creator)
+        return render_template('deleteMission.html', mission=missionToDelete, 
+            creator=creator)
 
 
 # Show a launch's details
@@ -350,9 +363,11 @@ def showLaunch(manifest_id):
     launch = session.query(Launches).filter_by(
         launch_id=manifest_id).all()
     if 'username' not in login_session or creator.id != login_session['user_id']:
-        return render_template('publiclaunches.html', manifest=manifest, launch=launch, creator=creator)
+        return render_template('publiclaunches.html', manifest=manifest, 
+            launch=launch, creator=creator)
     else:
-        return render_template('launches.html', manifest=manifest, launch=launch, creator=creator)
+        return render_template('launches.html', manifest=manifest, 
+            launch=launch, creator=creator)
 
 
 # Create a launch
@@ -362,7 +377,10 @@ def newLaunch(manifest_id):
         return redirect('/login')
     manifest = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
     if login_session['user_id'] != manifest.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to add launches to this mission. Please create your own mission to add launches.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() "\
+                "{alert('You are not authorized to add launches to this mission. " \
+                "Please create your own mission in order to add launches.');}" \
+                "</script><body onload='myFunction()'>"
     if request.method == 'POST':
             newLaunch = Launches(customer=request.form['customer'],
                                  description=request.form['description'],
@@ -386,7 +404,10 @@ def editLaunch(manifest_id, launch_id):
     editedLaunch = session.query(Launches).filter_by(id=launch_id).one()
     mission = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
     if login_session['user_id'] != mission.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit launches for this mission. Please create your own mission in order to edit launches.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() "\
+                "{alert('You are not authorized to edit launches on this mission. " \
+                "Please create your own mission in order to edit launches.');}" \
+                "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         if request.form['customer']:
             editedLaunch.name = request.form['customer']
@@ -401,7 +422,8 @@ def editLaunch(manifest_id, launch_id):
         flash('Launch Successfully Edited')
         return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
-        return render_template('editlaunch.html', manifest_id=manifest_id, launch_id=launch_id, launch=editedLaunch)
+        return render_template('editlaunch.html', manifest_id=manifest_id, 
+            launch_id=launch_id, launch=editedLaunch)
 
 
 # Delete a launch
@@ -414,14 +436,18 @@ def deleteLaunch(manifest_id, launch_id):
     launchToDelete = session.query(Launches).filter_by(id=launch_id).one()
     mission = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
     if login_session['user_id'] != mission.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to delete launches from this mission. Please create your own mission in order to delete items.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction()" \
+                "{alert('You are not authorized to delete launches from this mission." \
+                " Please create your own mission in order to delete items.');}" \
+                "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         session.delete(launchToDelete)
         session.commit()
         flash('Launch %s Successfully Deleted' % (launchToDelete.customer))
         return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
-        return render_template('deletelaunch.html', launch=launchToDelete, creator=creator, mission=mission, manifest_id=manifest_id)
+        return render_template('deletelaunch.html', launch=launchToDelete, 
+            creator=creator, mission=mission, manifest_id=manifest_id)
 
 
 # Disconnect based on provider
