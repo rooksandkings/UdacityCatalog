@@ -1,6 +1,8 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
+<div class="row">
+   <div class="col-md-1"></div>
 <!-- GOOGLE PLUS SIGN IN-->
 <div id="signinButton">
    <span class="g-signin"
@@ -47,8 +49,11 @@
    
      }); } }
 </script>
+</div>
 <!--END GOOGLE PLUS SIGN IN -->
 <!--FACEBOOK SIGN IN -->
+<div class="row">
+   <div class="col-md-1"></div>
 <script>
    window.fbAsyncInit = function() {
    FB.init({
@@ -103,5 +108,7 @@
       <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
    </fb:login-button>
 </button>
+</div>
+
 <!--END FACEBOOK SIGN IN -->
 {% endblock %}
