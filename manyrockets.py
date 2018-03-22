@@ -32,26 +32,42 @@ session.add(mission1)
 session.commit()
 
 # Create sample Launches
-launch1 = Launches(user_id=1, customer="Iridium Communications", description="Iridium (Flight 1)",
-                     launch_date="1/14/2017", rocket_type="Falcon 9 v1.1", launch=mission1)
+launch1 = Launches(user_id=1,
+                   customer="Iridium Communications",
+                   description="Iridium (Flight 1)",
+                   launch_date="1/14/2017",
+                   rocket_type="Falcon 9 v1.1",
+                   launch=mission1)
 
 session.add(launch1)
 session.commit()
 
-launch2 = Launches(user_id=1, customer="Iridium Communications", description="Iridium (Flight 2)",
-                     launch_date="6/25/2017", rocket_type="Falcon 9 v1.1", launch=mission1)
+launch2 = Launches(user_id=1,
+                   customer="Iridium Communications",
+                   description="Iridium (Flight 2)",
+                   launch_date="6/25/2017",
+                   rocket_type="Falcon 9 v1.1",
+                   launch=mission1)
 
 session.add(launch2)
 session.commit()
 
-launch3 = Launches(user_id=1, customer="Iridium Communications", description="Iridium (Flight 3)",
-                     launch_date="10/9/2017", rocket_type="Falcon 9 v1.1", launch=mission1)
+launch3 = Launches(user_id=1,
+                   customer="Iridium Communications",
+                   description="Iridium (Flight 3)",
+                   launch_date="10/9/2017",
+                   rocket_type="Falcon 9 v1.1",
+                   launch=mission1)
 
 session.add(launch3)
 session.commit()
 
-launch4 = Launches(user_id=1, customer="Iridium Communications", description="Iridium (Flight 4)",
-                     launch_date="12/22/2017", rocket_type="Falcon 9 v1.1", launch=mission1)
+launch4 = Launches(user_id=1,
+                   customer="Iridium Communications",
+                   description="Iridium (Flight 4)",
+                   launch_date="12/22/2017",
+                   rocket_type="Falcon 9 v1.1",
+                   launch=mission1)
 
 session.add(launch4)
 session.commit()

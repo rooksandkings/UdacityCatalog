@@ -32,6 +32,8 @@ Before running the catalog application, there are a good amount of python module
 * After the python modules have been installed, type *ls* to ensure that you are in the directory that states, database_setup.py, project.py, folders named templates and static.
 * Type *python database_setup.py* to initialize the database.
 * Type *python project.py*.
-* Go into the browser using http://localhost:8000 to view the SpaceX Manifest app.  
+* Create two secret JSON files using instructions provided in the submission notes. 
+* Go into the browser using http://localhost:8000 to view the SpaceX Manifest app.
+
 
 Once the user is logged into the application, they can then login through Facebook or Google+ Sign In. The user will also be able to view, add, edit and delete missions and launches.
