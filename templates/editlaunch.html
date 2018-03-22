@@ -5,49 +5,49 @@
 <div class="row banner">
 	<div class="col-md-1"></div>
 		<div class="col-md-9">
-		<h1>New Launch</h1>
+		<h1>Edit Launch</h1>
 		</div>
 </div>
 
 	<div class="row">
+		<div class="col-md-1"></div>
 		<div class="col-md-6 col-md-offset-1 padding-top">
 			<form action="#" method = "post">
 				<div class="form-group">
 					<label for="name">Name:</label>
-					<input type ="text" maxlength="100" class="form-control" name="name" value="{{item.name }}">
+					<input type ="text" maxlength="50" class="form-control" name="customer" placeholder="{{launch.customer}}">
 
 					<label for="description">Description:</label>
-					<textarea class="form-control" maxlength="250" rows="3" name="description">{{item.description}}</textarea>
+					<textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="{{launch.description}}"></textarea>
 
-					<label for="price">Price:</label>
+					<label for="launch_date">Launch Date:</label>
 					<div class="input-group">
-						<div class="input-group-addon">$</div>
-						<input type ="text" maxlength="10" class="form-control" name="price" value="{{item.price}}">
+						<input type ="date" class="form-control" maxlength="10" name="launch_date" placeholder="{{launch.launch_date}}">
 					</div>
-					<label for="course">Course:</label>
+					<label for="rocket_type">Rocket:</label>
 					<div class="radio">
 					  <label>
-					    <input type="radio" name="course" id="course1" value="Appetizer" {% if item.course == 'Appetizer'%}checked{%endif%}>Appetizer
+					    <input type="radio" name="rocket_type" id="rocket1" value="Falcon 1" {% if launch.rocket_type == 'Falcon 1'%}checked{%endif%}>Falcon 1
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input type="radio" name="course" id="course2" value="Entree" {% if item.course == 'Entree' %}checked{%endif%}>Entree
+					    <input type="radio" name="rocket_type" id="rocket2" value="Falcon 9 v1.1" {% if launch.rocket_type == 'Falcon 9 v1.1'%}checked{%endif%}>Falcon 9 v1.1
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input type="radio" name="course" id="course3" value="Dessert" {% if item.course == 'Dessert'%}checked{%endif%}>Dessert
+					    <input type="radio" name="rocket_type" id="rocket3" value="Falcon 9 v1.2" {% if launch.rocket_type == 'Falcon 9 v1.2'%}checked{%endif%}>Falcon 9 v1.2
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input type="radio" name="course" id="course4" value="Beverage" {%if item.course =='Beverage'%}checked{%endif%}>Beverage
+					    <input type="radio" name="rocket_type" id="rocket4" value="Falcon Heavy" {% if launch.rocket_type == 'Falcon Heavy'%}checked{%endif%}>Falcon Heavy
 					  </label>
 					</div>
 				</div>
 				<a href="javascript:;" onclick="parentNode.submit();" button type ="submit" class="submit-link btn btn-outline-primary">Save</a>
-					<a href = '{{url_for('showRestaurants')}}' class="btn btn-outline-primary">Cancel</a>
+				<a href = '{{url_for('showLaunch', manifest_id = manifest_id)}}' class="btn btn-outline-primary">Cancel</a>
 			</form>
 		</div>
 	</div>

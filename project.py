@@ -368,7 +368,7 @@ def showLaunch(manifest_id):
         return render_template('launches.html', manifest=manifest, launch=launch, creator=creator)
 
 
-# Create a new menu item
+# Create a launch
 @app.route('/launch_manifest/<int:manifest_id>/launch/new/', methods=['GET', 'POST'])
 def newLaunch(manifest_id):
     flash('Load')
@@ -393,50 +393,48 @@ def newLaunch(manifest_id):
         flash('New Launch NOT Successfully Created')
         return render_template('newlaunch.html', manifest_id=manifest_id)
 
-# Edit a menu item
-
-
-@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit', methods=['GET', 'POST'])
-def editMenuItem(restaurant_id, menu_id):
+# Edit a launch
+@app.route('/launch_manifest/<int:manifest_id>/launch/<int:launch_id>/edit', methods=['GET', 'POST'])
+def editLaunch(manifest_id, launch_id):
     if 'username' not in login_session:
         return redirect('/login')
-    editedItem = session.query(MenuItem).filter_by(id=menu_id).one()
-    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-    if login_session['user_id'] != restaurant.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()'>"
+    editedLaunch = session.query(Launches).filter_by(id=launch_id).one()
+    mission = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
+    if login_session['user_id'] != mission.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit launches for this mission. Please create your own mission in order to edit launches.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
-        if request.form['name']:
-            editedItem.name = request.form['name']
+        if request.form['customer']:
+            editedLaunch.name = request.form['customer']
         if request.form['description']:
-            editedItem.description = request.form['description']
-        if request.form['price']:
-            editedItem.price = request.form['price']
-        if request.form['course']:
-            editedItem.course = request.form['course']
-        session.add(editedItem)
+            editedLaunch.description = request.form['description']
+        if request.form['launch_date']:
+            editedLaunch.launch_date = request.form['launch_date']
+        if request.form['rocket_type']:
+            editedLaunch.rocket_type = request.form['rocket_type']
+        session.add(editedLaunch)
         session.commit()
-        flash('Menu Item Successfully Edited')
-        return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+        flash('Launch Successfully Edited')
+        return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
-        return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, item=editedItem)
+        return render_template('editlaunch.html', manifest_id=manifest_id, launch_id=launch_id, launch=editedLaunch)
 
 
-# Delete a menu item
-@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods=['GET', 'POST'])
-def deleteMenuItem(restaurant_id, menu_id):
+# Delete a launch
+@app.route('/launch_manifest/<int:manifest_id>/launch/<int:launch_id>/delete', methods=['GET', 'POST'])
+def deleteLaunch(manifest_id, launch_id):
     if 'username' not in login_session:
         return redirect('/login')
-    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-    itemToDelete = session.query(MenuItem).filter_by(id=menu_id).one()
-    if login_session['user_id'] != restaurant.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to delete menu items to this restaurant. Please create your own restaurant in order to delete items.');}</script><body onload='myFunction()'>"
+    launchToDelete = session.query(Launches).filter_by(id=launch_id).one()
+    mission = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
+    if login_session['user_id'] != mission.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to delete launches from this mission. Please create your own mission in order to delete items.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
-        session.delete(itemToDelete)
+        session.delete(launchToDelete)
         session.commit()
-        flash('Menu Item Successfully Deleted')
-        return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+        flash('Launch Successfully Deleted')
+        return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
-        return render_template('deleteMenuItem.html', item=itemToDelete)
+        return render_template('deletelaunch.html', launch=launchToDelete, manifest_id=manifest_id)
 
 
 # Disconnect based on provider

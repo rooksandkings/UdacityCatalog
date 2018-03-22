@@ -32,8 +32,8 @@
 				<h2>{{i.rocket_type}}</h2>
 			</div>
 			<div class="col-md-2">
-				<a href='{{url_for('newLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="edit-launch" aria-hidden="true">Edit Launch</a> |
-				<a href='{{url_for('newLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="delete-launch" aria-hidden="true">Delete Launch</a>
+				<a href='{{url_for('editLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="edit-launch" aria-hidden="true">Edit Launch</a> |
+				<a href='{{url_for('deleteLaunch', manifest_id = manifest.id, launch_id=i.id )}}' id="delete-launch" aria-hidden="true">Delete Launch</a>
 			</div>
 		</div>
 		<div class="col-md-1"></div>
