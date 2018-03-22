@@ -3,7 +3,8 @@
    <img src="\static\SpaceXLogo.png" alt="SpaceX Logo" title="" style="height: 4.4rem;">
    </a>
    <h1 class="my-0 mr-md-auto font-weight-normal">SPACEX Launch Manifest</h1>
-   {%if 'username' not in session %}
+   {% if 'login_page' == url %}
+   {% elif 'username' not in session %}
    <a href="{{url_for('showLogin')}}" button type="button" class="btn btn-outline-primary">Login</a>
    {% else %}
    <a href="{{url_for('newMission')}}" button type ="button" class="btn btn-outline-primary" id="new-launch">New Mission</a>
