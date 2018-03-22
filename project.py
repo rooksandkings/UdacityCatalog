@@ -212,8 +212,6 @@ def gconnect():
     return output
 
 # User Helper Functions
-
-
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
                    'email'], picture=login_session['picture'])
@@ -236,8 +234,6 @@ def getUserID(email):
         return None
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
-
-
 @app.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
@@ -260,32 +256,25 @@ def gdisconnect():
         return response
 
 
-# JSON APIs to view Restaurant Information
-# @app.route('/restaurant/<int:restaurant_id>/menu/JSON')
-# def restaurantMenuJSON(restaurant_id):
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-#     items = session.query(MenuItem).filter_by(
-#         restaurant_id=restaurant_id).all()
-#     return jsonify(MenuItems=[i.serialize for i in items])
-
-# @app.route('/restaurant/<int:restaurant_id>/menu/JSON')
-# def restaurantMenuJSON(restaurant_id):
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-#     items = session.query(MenuItem).filter_by(
-#         restaurant_id=restaurant_id).all()
-#     return jsonify(MenuItems=[i.serialize for i in items])
+# JSON APIs to view Manifest Information
+@app.route('/launch_manifest/<int:manifest_id>/launch/JSON')
+def manifestLaunchJSON(manifest_id):
+    manifest = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
+    launches = session.query(Launches).filter_by(
+        launch_id=manifest_id).all()
+    return jsonify(launches=[i.serialize for i in launches])
 
 
-# @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON')
-# def menuItemJSON(restaurant_id, menu_id):
-#     Menu_Item = session.query(MenuItem).filter_by(id=menu_id).one()
-#     return jsonify(Menu_Item=Menu_Item.serialize)
+@app.route('/launch_manifest/<int:manifest_id>/launch/<int:launch_id>/JSON')
+def launchJSON(manifest_id, launch_id):
+    launch = session.query(Launches).filter_by(id=launch_id).one()
+    return jsonify(launch=launch.serialize)
 
 
-# @app.route('/restaurant/JSON')
-# def restaurantsJSON():
-#     restaurants = session.query(Restaurant).all()
-#     return jsonify(restaurants=[r.serialize for r in restaurants])
+@app.route('/launch_manifest/JSON')
+def manifestJSON():
+    manifest = session.query(SpaceXLaunchManifest).all()
+    return jsonify(manifest=[i.serialize for i in manifest])
 
 
 # Show full manifest
@@ -312,8 +301,6 @@ def newMission():
         return render_template('newmission.html')
 
 # Edit a launch on the manifest
-
-
 @app.route('/launch_manifest/<int:manifest_id>/edit/', methods=['GET', 'POST'])
 def editMission(manifest_id):
     editedMission = session.query(
@@ -351,8 +338,6 @@ def deleteMission(manifest_id):
         return render_template('deleteMission.html', mission=missionToDelete, creator=creator)
 
 # Show a launch's details
-
-
 @app.route('/launch_manifest/<int:manifest_id>/')
 @app.route('/launch_manifest/<int:manifest_id>/launch/')
 def showLaunch(manifest_id):
@@ -361,24 +346,20 @@ def showLaunch(manifest_id):
     launch = session.query(Launches).filter_by(
         launch_id=manifest_id).all()
     if 'username' not in login_session or creator.id != login_session['user_id']:
-        flash('publiclaunches.html')
         return render_template('publiclaunches.html', manifest=manifest, launch=launch, creator=creator)
     else:
-        flash('launches.html')
         return render_template('launches.html', manifest=manifest, launch=launch, creator=creator)
 
 
 # Create a launch
 @app.route('/launch_manifest/<int:manifest_id>/launch/new/', methods=['GET', 'POST'])
 def newLaunch(manifest_id):
-    flash('Load')
     if 'username' not in login_session:
         return redirect('/login')
     manifest = session.query(SpaceXLaunchManifest).filter_by(id=manifest_id).one()
     if login_session['user_id'] != manifest.user_id:
         return "<script>function myFunction() {alert('You are not authorized to add launches to this mission. Please create your own mission to add launches.');}</script><body onload='myFunction()'>"
     if request.method == 'POST':
-            flash('POSTED')
             newLaunch = Launches(customer=request.form['customer'], 
                                 description=request.form['description'], 
                                 launch_date=request.form['launch_date'],
@@ -390,7 +371,6 @@ def newLaunch(manifest_id):
             flash('New Launch %s Successfully Created' % (newLaunch.customer))
             return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
-        flash('New Launch NOT Successfully Created')
         return render_template('newlaunch.html', manifest_id=manifest_id)
 
 # Edit a launch
@@ -433,7 +413,7 @@ def deleteLaunch(manifest_id, launch_id):
     if request.method == 'POST':
         session.delete(launchToDelete)
         session.commit()
-        flash('Launch Successfully Deleted')
+        flash('Launch %s Successfully Deleted' % (launchToDelete.customer))
         return redirect(url_for('showLaunch', manifest_id=manifest_id))
     else:
         return render_template('deletelaunch.html', launch=launchToDelete, creator=creator, mission=mission, manifest_id=manifest_id)
